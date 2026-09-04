@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "sayanth-portfolio (1).html",
+      "index-old-sketch.html",
+      "public/**",
+      ".agents/**"
+    ]
+  }
+}

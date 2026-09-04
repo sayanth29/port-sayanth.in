@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sayanth PV — Full Stack Developer</title>
+<meta name="description" content="Sayanth PV — BCA graduate and full-stack developer building production-ready MERN, Next.js, and AI-powered products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<!-- Lucide Icons CDN -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+  --bg: #f0ede8;
+  --ink: #1a1a1a;
+  --gray: #9F9F9F;
+  --gray-dark: #484848;
+  --gray-light: #b5b5b5;
+  --sketch: #525252;
+  --sketch-light: #999;
+  --accent-cyan: #22d3ee;
+  --paper-line: rgba(0,0,0,0.045);
+}
+
+/* ===== CUSTOM CURSOR ===== */
+#cursor, #cursorDot {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+#cursor {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+}
+#cursorDot {
+  width: 4px;
+  height: 4px;
+  background: var(--ink);
+}
+#cursor.hovered {
+  transform: translate(-50%, -50%) scale(1.6);
+  background: rgba(0, 0, 0, 0.05);
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+  body {
+    cursor: none;
+  }
+  #cursor, #cursorDot {
+    opacity: 1;
+  }
+}
+@media (max-width: 768px) {
+  #cursor, #cursorDot {
+    display: none;
+  }
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+/* ===== REALISTIC PAPER TEXTURE ===== */
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  color: var(--ink);
+  overflow-x: hidden;
+  background-color: #f0ede8;
+  background-image: url('image 1.jpg');
+  background-size: 600px auto;
+  background-repeat: repeat;
+  position: relative;
+}
+/* Subtle overlay to soften tiling seams and add warmth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: rgba(240, 237, 232, 0.15);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02' numOctaves='3' seed='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23b)' opacity='0.02'/%3E%3C/svg%3E");
+  background-size: 400px 400px;
+  pointer-events: none;
+}
+
+
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 80px;
+  z-index: 1000;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.nav-logo {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 36px;
+  color: var(--gray);
+  text-decoration: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.nav-logo.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+.nav-links { display: flex; gap: 40px; }
+.nav-links a {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 28px;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+/* Mobile nav toggle */
+.nav-toggle { display: none; cursor: pointer; background: none; border: none; padding: 8px; }
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--ink);
+  margin: 5px 0;
+  transition: all 0.3s;
+}
+
+/* Paper Plane */
+.paper-plane {
+  position: fixed;
+  right: 60px;
+  top: 45%;
+  z-index: 50;
+  opacity: 0.25;
+  animation: planeFloat 5s ease-in-out infinite;
+}
+@keyframes planeFloat {
+  0%,100%{transform:translateY(0) rotate(-18deg);}
+  50%{transform:translateY(-12px) rotate(-10deg);}
+}
+
+/* Sections */
+section {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 0 80px;
+  padding-top: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+.hero-left { max-width: 520px; margin-top: 120px; }
+.hero-hello {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 22px;
+  color: var(--gray-dark);
+}
+.hero-name {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: clamp(80px, 11vw, 140px);
+  line-height: 1;
+  color: var(--ink);
+  margin: 8px 0 16px;
+}
+.hero-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  color: var(--gray-dark);
+  line-height: 1.6;
+  max-width: 500px;
+}
+.hero-right { position: relative; width: 480px; flex-shrink: 0; }
+.bucket-area { position: relative; margin-top: 60px; }
+
+/* Floating cards */
+.bucket-card {
+  position: absolute;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 18px;
+  color: var(--ink);
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.06);
+  z-index: 5;
+  transition: transform 0.3s;
+}
+.bucket-card:hover { transform: scale(1.08) !important; }
+.card-startup { top: -30px; right: 40px; background: #f8c4c4; transform: rotate(8deg); animation: bobCard 3.5s ease-in-out infinite; }
+.card-about { top: 10px; right: 140px; background: #fde68a; transform: rotate(-5deg); animation: bobCard 4s ease-in-out 0.4s infinite; }
+.card-works { top: -15px; right: 250px; background: #d1d5db; transform: rotate(3deg); animation: bobCard 3.8s ease-in-out 0.8s infinite; }
+.card-smiley { top: 30px; right: 200px; background: #fef9c3; transform: rotate(-2deg); animation: bobCard 4.2s ease-in-out 1.2s infinite; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; }
+@keyframes bobCard { 0%,100%{margin-top:0;}50%{margin-top:-8px;} }
+
+/* ===== PROJECTS ===== */
+.projects-section {
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 80px;
+  gap: 100px;
+  min-height: auto;
+}
+.project-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+.project-row.visible { opacity: 1; transform: translateY(0); }
+
+/* Screenshot frame with corner marks */
+.screenshot-container {
+  position: relative;
+  flex: 1;
+  max-width: 560px;
+  min-width: 0;
+}
+.corner-marks { position: absolute; inset: -20px; pointer-events: none; z-index: 1; }
+.corner-mark { position: absolute; width: 40px; height: 40px; }
+.corner-mark.tl { top:0;left:0;border-top:1.5px solid var(--sketch-light);border-left:1.5px solid var(--sketch-light); }
+.corner-mark.tr { top:0;right:0;border-top:1.5px solid var(--sketch-light);border-right:1.5px solid var(--sketch-light); }
+.corner-mark.bl { bottom:0;left:0;border-bottom:1.5px solid var(--sketch-light);border-left:1.5px solid var(--sketch-light); }
+.corner-mark.br { bottom:0;right:0;border-bottom:1.5px solid var(--sketch-light);border-right:1.5px solid var(--sketch-light); }
+
+.screenshot-mockup {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 4px 8px 32px rgba(0,0,0,0.10);
+  transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+  z-index: 2;
+}
+.screenshot-mockup:hover { transform: scale(1.02) rotate(-0.5deg); }
+
+/* Mockup Switcher Tabs */
+.mockup-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 10;
+}
+.mockup-tab {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 20px;
+  background: transparent;
+  border: 1.5px dashed var(--sketch-light);
+  border-radius: 6px;
+  padding: 4px 14px;
+  cursor: pointer;
+  color: var(--gray);
+  transition: all 0.25s ease;
+}
+.mockup-tab:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.mockup-tab.active {
+  border-style: solid;
+  border-color: var(--ink);
+  color: var(--ink);
+  background: rgba(0, 0, 0, 0.03);
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+}
+.mockup-view {
+  display: none;
+  opacity: 0;
+}
+.mockup-view.active {
+  display: block;
+  opacity: 1;
+  animation: mockupFadeIn 0.4s ease forwards;
+}
+@keyframes mockupFadeIn {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Decorative icon */
+.deco-icon { position: absolute; z-index: 3; opacity: 0.5; }
+
+/* Overlay badge */
+.overlay-badge {
+  position: absolute;
+  background: #1e293b;
+  color: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  z-index: 4;
+  box-shadow: 4px 8px 24px rgba(0,0,0,0.15);
+}
+.overlay-badge-title { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.overlay-badge-sub { font-size: 11px; color: #94a3b8; margin-bottom: 10px; }
+.overlay-badge-icons { display: flex; gap: 8px; }
+.overlay-badge-icons span { width: 24px; height: 24px; background: rgba(255,255,255,0.08); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.overlay-badge-icons span svg { width: 14px; height: 14px; stroke: #94a3b8; fill: none; }
+
+/* Project Info */
+.project-info { flex: 1; max-width: 440px; min-width: 0; }
+.project-category { font-size: 14px; color: var(--gray); margin-bottom: 8px; }
+.project-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(24px, 3vw, 32px);
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+.project-desc {
+  font-size: 15px;
+  color: var(--gray-dark);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+/* Shahil-style buttons */
+.shahil-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border: 1.5px solid var(--sketch-light);
+  border-radius: 8px;
+  background: transparent;
+  text-decoration: none;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 24px;
+  color: var(--ink);
+  margin-bottom: 12px;
+  margin-right: 8px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.shahil-btn:hover { border-color: var(--ink); box-shadow: 2px 4px 12px rgba(0,0,0,0.06); }
+
+/* Hand cursor icon */
+.hand-cursor { width: 32px; height: 32px; opacity: 0.4; transition: opacity 0.2s; }
+.shahil-btn:hover .hand-cursor { opacity: 0.7; }
+
+/* GitHub icon */
+.github-icon {
+  width: 32px; height: 32px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+.shahil-btn:hover .github-icon { opacity: 0.7; }
+
+/* ===== MOCK UI STYLES ===== */
+/* WorkHire Landing */
+.mock-wh-landing { background: linear-gradient(180deg, #f8f7ff, #fff); padding: 20px 24px; min-height: 260px; position: relative; }
+.mock-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.mock-nav-logo { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; }
+.mock-nav-logo .dot { width: 20px; height: 20px; background: #5B4FE9; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 700; }
+.mock-nav-links { display: flex; gap: 14px; font-size: 9px; color: var(--gray); align-items: center; }
+.mock-signup { background: #5B4FE9; color: white; padding: 5px 14px; border-radius: 6px; font-size: 8px; font-weight: 500; }
+.mock-badge { display: inline-flex; align-items: center; gap: 4px; background: #f0f0ff; border: 1px solid #e5e5ff; border-radius: 16px; padding: 3px 12px; font-size: 7px; color: #5B4FE9; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+.mock-headline { font-size: 20px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 10px; }
+.mock-headline em { color: #5B4FE9; font-style: italic; font-family: 'Instrument Serif', serif; font-size: 22px; }
+.mock-subdesc { font-size: 9px; color: var(--gray); line-height: 1.6; max-width: 250px; margin-bottom: 16px; }
+.mock-search { display: flex; background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px; gap: 6px; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+.mock-search-field { flex: 1; padding: 5px 8px; font-size: 8px; color: #bbb; display: flex; align-items: center; gap: 4px; }
+.mock-search-field svg { width: 10px; height: 10px; stroke: #bbb; flex-shrink: 0; }
+.mock-search-btn { background: #5B4FE9; color: white; border-radius: 7px; padding: 7px 14px; font-size: 8px; font-weight: 500; white-space: nowrap; }
+.mock-popular { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+.mock-popular span { font-size: 7px; color: var(--gray); background: #f5f5f5; padding: 3px 8px; border-radius: 10px; }
+.mock-popular .label { background: none; font-weight: 500; color: #888; }
+.mock-float-card { position: absolute; background: white; border-radius: 10px; padding: 10px 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); font-size: 8px; border: 1px solid #f0f0f0; }
+.mock-hiring { color: #22c55e; font-weight: 600; font-size: 7px; display: flex; align-items: center; gap: 3px; margin-bottom: 3px; }
+.mock-hiring::before { content: ''; width: 5px; height: 5px; background: #22c55e; border-radius: 50%; }
+
+/* WorkHire Dashboard */
+.mock-wh-dash { display: flex; min-height: 260px; background: #faf9ff; }
+.mock-sidebar { width: 120px; background: white; border-right: 1px solid #f0f0f0; padding: 14px 10px; }
+.mock-sidebar-header { display: flex; align-items: center; gap: 5px; font-weight: 600; font-size: 10px; margin-bottom: 3px; }
+.mock-sidebar-sub { font-size: 6px; color: #999; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+.mock-sidebar-item { padding: 5px 8px; border-radius: 5px; font-size: 9px; color: #888; margin-bottom: 1px; display: flex; align-items: center; gap: 6px; }
+.mock-sidebar-item svg { width: 12px; height: 12px; stroke: currentColor; fill: none; flex-shrink: 0; }
+.mock-sidebar-item.active { background: #f0eeff; color: #5B4FE9; font-weight: 500; }
+.mock-dash-content { flex: 1; padding: 14px 16px; overflow: hidden; }
+.mock-welcome { font-size: 12px; margin-bottom: 10px; }
+.mock-welcome span { color: #5B4FE9; }
+.mock-banner { background: linear-gradient(135deg, #5B4FE9, #7c73f0); border-radius: 10px; padding: 12px 16px; color: white; margin-bottom: 12px; }
+.mock-banner-badge { background: rgba(255,255,255,0.2); border-radius: 10px; padding: 2px 8px; font-size: 6px; display: inline-block; margin-bottom: 4px; }
+.mock-banner h4 { font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+.mock-banner p { font-size: 7px; opacity: 0.85; line-height: 1.5; }
+.mock-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.mock-stat { background: white; border-radius: 8px; padding: 10px 8px; border: 1px solid #f0f0f0; }
+.mock-stat-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.mock-stat-icon svg { width: 12px; height: 12px; stroke: currentColor; fill: none; }
+.mock-stat-num { font-size: 16px; font-weight: 700; color: var(--ink); }
+.mock-stat-label { font-size: 6px; color: #999; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Horbax Dashboard */
+.mock-horbax { display: flex; min-height: 260px; background: #f9fafb; }
+.mock-hb-sidebar { width: 110px; background: white; border-right: 1px solid #f0f0f0; padding: 14px 10px; }
+.mock-hb-logo { font-weight: 700; font-size: 11px; color: #0d9488; margin-bottom: 2px; }
+.mock-hb-sub { font-size: 6px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+.mock-hb-item { padding: 5px 8px; border-radius: 5px; font-size: 9px; color: #888; margin-bottom: 1px; display: flex; align-items: center; gap: 6px; }
+.mock-hb-item svg { width: 12px; height: 12px; stroke: currentColor; fill: none; flex-shrink: 0; }
+.mock-hb-item.active { background: #e6f7f5; color: #0d9488; font-weight: 500; border-left: 3px solid #0d9488; }
+.mock-hb-main { flex: 1; padding: 14px 16px; overflow: hidden; }
+.mock-hb-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.mock-hb-title { font-size: 15px; font-weight: 600; }
+.mock-hb-desc { font-size: 7px; color: #999; margin-top: 2px; }
+.mock-hb-create { background: #0d9488; color: white; border-radius: 7px; padding: 5px 12px; font-size: 7px; font-weight: 500; white-space: nowrap; }
+.mock-hb-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
+.mock-hb-stat { background: white; border-radius: 8px; padding: 10px 8px; border: 1px solid #f0f0f0; }
+.mock-hb-stat-icon { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+.mock-hb-stat-icon svg { width: 11px; height: 11px; stroke: currentColor; fill: none; }
+.mock-hb-stat-label { font-size: 6px; color: #999; text-transform: uppercase; margin-bottom: 2px; }
+.mock-hb-stat-val { font-size: 14px; font-weight: 700; color: var(--ink); }
+.mock-hb-table-title { font-size: 10px; font-weight: 600; margin-bottom: 8px; }
+.mock-hb-table { width: 100%; border-collapse: collapse; font-size: 8px; }
+.mock-hb-table th { font-size: 6px; color: #999; text-transform: uppercase; letter-spacing: 0.06em; text-align: left; padding: 5px 6px; border-bottom: 1px solid #f0f0f0; font-weight: 500; }
+.mock-hb-table td { padding: 6px; border-bottom: 1px solid #f8f8f8; }
+.mock-order-id { color: #0d9488; font-weight: 600; }
+.mock-status { font-weight: 500; display: flex; align-items: center; gap: 3px; }
+.mock-status svg { width: 6px; height: 6px; flex-shrink: 0; }
+.mock-payment { font-size: 6px; padding: 2px 6px; border-radius: 3px; font-weight: 600; text-transform: uppercase; }
+.mock-payment.upi { background: #dbeafe; color: #2563eb; }
+.mock-payment.cash { background: #fef3c7; color: #d97706; }
+
+/* ===== SKILLS ===== */
+.skills-section {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 80px 80px;
+  gap: 20px;
+  min-height: auto;
+}
+.section-label {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: clamp(48px, 7vw, 80px);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.squiggle-svg { width: 70px; height: 20px; }
+.squiggle-svg path { stroke: var(--sketch); fill: none; stroke-width: 2.5; stroke-linecap: round; }
+.section-subtitle {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 24px;
+  color: var(--gray);
+  margin-bottom: 40px;
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.skill-card {
+  background: white;
+  border: 1.5px solid rgba(0,0,0,0.06);
+  border-radius: 12px;
+  padding: 22px 14px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+.skill-card:hover {
+  transform: translateY(-5px) rotate(-1deg);
+  box-shadow: 4px 8px 24px rgba(0,0,0,0.08);
+  border-color: var(--sketch-light);
+}
+.skill-card.hidden-skill { display: none; }
+.skills-grid.show-all .skill-card.hidden-skill { display: block; }
+.skills-btn-container { width: 100%; display: flex; justify-content: center; margin-top: 32px; }
+.skill-icon-wrap {
+  width: 44px; height: 44px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+.skill-icon-wrap svg { width: 22px; height: 22px; }
+.skill-name {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+/* ===== ABOUT ===== */
+.about-section {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 80px 80px;
+  gap: 20px;
+  min-height: auto;
+}
+.about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; width: 100%; }
+.about-text { font-size: 17px; line-height: 1.85; color: var(--gray-dark); font-weight: 300; }
+.about-text strong { color: var(--ink); font-weight: 500; }
+.about-details { display: flex; flex-direction: column; gap: 22px; }
+.about-item { border-bottom: 1px dashed rgba(0,0,0,0.08); padding-bottom: 18px; }
+.about-item:last-child { border-bottom: none; }
+.about-label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-bottom: 4px; }
+.about-value { font-family: 'Nanum Pen Script', cursive; font-size: 24px; color: var(--ink); }
+.about-value a { color: #5B4FE9; text-decoration: none; }
+.status-active { color: #16a34a; display: flex; align-items: center; gap: 8px; }
+.pulse-dot { width: 8px; height: 8px; background: #16a34a; border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(22,163,106,0.4);}50%{box-shadow:0 0 0 6px rgba(22,163,106,0);} }
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 60px 80px 40px;
+  border-top: 1px dashed rgba(0,0,0,0.08);
+}
+.footer-center { display: flex; flex-direction: column; align-items: center; margin-bottom: 60px; }
+.footer-bucket-svg { opacity: 0.3; }
+.footer-tagline { font-family: 'Nanum Pen Script', cursive; font-size: 22px; color: var(--gray); margin-top: 16px; }
+.footer-tagline span { color: #5B4FE9; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-family: 'Nanum Pen Script', cursive; font-size: 20px; color: var(--ink); }
+.footer-socials { display: flex; gap: 16px; }
+.footer-socials a {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(0,0,0,0.15);
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.footer-socials a:hover { background: var(--ink); color: white; border-color: var(--ink); }
+.footer-socials a svg { width: 16px; height: 16px; }
+
+/* Scroll anim */
+.fade-in { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.23,1,0.32,1); }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+  nav { padding: 0 40px; }
+  .hero { padding: 80px 40px 40px; gap: 60px; }
+  .hero-right { width: 380px; }
+  .projects-section { padding: 80px 40px; }
+  .project-row { gap: 40px; }
+  .skills-section, .about-section { padding: 60px 40px; }
+  footer { padding: 48px 40px 32px; }
+}
+
+@media (max-width: 900px) {
+  .project-row { flex-direction: column; }
+  .screenshot-container { max-width: 100%; width: 100%; }
+  .project-info { max-width: 100%; }
+  .mock-stats-row, .mock-hb-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 24px; height: 64px; }
+  .nav-logo { font-size: 28px; }
+  .nav-links { 
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0; right: 0;
+    background: rgba(240,237,232,0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px 24px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 28px; }
+  .nav-toggle { display: block; }
+
+  .hero { flex-direction: column; padding: 100px 24px 40px; gap: 40px; }
+  .hero-left { margin-top: 40px; }
+  .hero-right { width: 100%; max-width: 320px; }
+  .hero-desc { font-size: 17px; }
+
+  .projects-section { padding: 60px 24px; gap: 70px; }
+  .project-row { gap: 30px; }
+  .project-title { font-size: 24px; }
+  .project-desc { font-size: 14px; }
+  .shahil-btn { font-size: 20px; padding: 12px 20px; }
+
+  .skills-section, .about-section { padding: 48px 24px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .skills-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+  .skill-card { padding: 16px 10px; }
+  .skill-icon-wrap { width: 36px; height: 36px; }
+  .skill-icon-wrap svg { width: 18px; height: 18px; }
+
+  footer { padding: 40px 24px 24px; }
+  .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+  .paper-plane { display: none; }
+
+  .bucket-card { font-size: 14px; padding: 6px 12px; }
+  .card-startup { right: 20px; }
+  .card-about { right: 100px; }
+  .card-works { right: 180px; }
+  .card-smiley { right: 140px; width: 36px; height: 36px; }
+
+  .overlay-badge { display: none; }
+  .deco-icon { display: none; }
+  .corner-marks { inset: -12px; }
+  .corner-mark { width: 28px; height: 28px; }
+}
+
+@media (max-width: 420px) {
+  .hero-name { font-size: 72px; }
+  .hero-hello { font-size: 18px; }
+  .hero-desc { font-size: 15px; }
+  .section-label { font-size: 48px; }
+  .mock-sidebar, .mock-hb-sidebar { width: 80px; font-size: 7px; }
+  .mock-sidebar-item, .mock-hb-item { font-size: 7px; gap: 4px; padding: 4px 6px; }
+  .mock-sidebar-item svg, .mock-hb-item svg { width: 10px; height: 10px; }
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+section[id] { scroll-margin-top: 80px; }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursorDot"></div>
+
+
+
+<!-- Paper Plane -->
+<svg class="paper-plane" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M6 24L42 6L28 42L22 26L6 24Z" stroke="#666" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M22 26L30 18" stroke="#666" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Sayanth.pv</a>
+  <div class="nav-links" id="navLinks">
+    <a href="#work" onclick="closeNav()">work</a>
+    <a href="#about" onclick="closeNav()">about me</a>
+    <a href="#skills" onclick="closeNav()">skills</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <p class="hero-hello">Hello, I'm</p>
+    <h1 class="hero-name">Sayanth</h1>
+    <p class="hero-desc">I design and build web applications that solve real business problems — from SaaS platforms to custom management tools, delivered on time and built to last.</p>
+    <a href="tel:+919074561770" class="shahil-btn" style="margin-top: 28px;">
+      Let's Talk
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="bucket-area">
+      <div class="bucket-card card-startup">Ventures</div>
+      <div class="bucket-card card-about">About Me</div>
+      <div class="bucket-card card-works">Projects</div>
+      <div class="bucket-card card-smiley">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <svg viewBox="0 0 340 340" fill="none" style="width:100%;margin-top:70px">
+        <path d="M95 100 Q170 55 245 100" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="170" cy="62" r="5" stroke="#888" stroke-width="2"/>
+        <line x1="170" y1="57" x2="170" y2="20" stroke="#888" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <ellipse cx="170" cy="108" rx="118" ry="22" stroke="#888" stroke-width="2" stroke-dasharray="5 3"/>
+        <path d="M52 108 L72 295 Q170 315 268 295 L288 108" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="170" cy="295" rx="98" ry="16" stroke="#888" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="projects-section" id="work">
+
+  <!-- WorkHire Project (SaaS + Dashboard) -->
+  <div class="project-row" id="proj1">
+    <div class="screenshot-container">
+      <div class="corner-marks"><div class="corner-mark tl"></div><div class="corner-mark tr"></div><div class="corner-mark bl"></div><div class="corner-mark br"></div></div>
+      
+      <!-- Mockup Switcher Tabs -->
+      <div class="mockup-tabs">
+        <button class="mockup-tab active" data-target="wh-landing">SaaS Landing</button>
+        <button class="mockup-tab" data-target="wh-dashboard">Seeker Dashboard</button>
+      </div>
+
+      <div class="screenshot-mockup">
+        <!-- Tab 1: SaaS Landing Page -->
+        <div class="mockup-view active" id="wh-landing">
+          <div class="mock-wh-landing">
+            <div class="mock-nav">
+              <div class="mock-nav-logo"><div class="dot">W</div> WorkHire</div>
+              <div class="mock-nav-links">
+                <span>Browse Jobs</span><span>For Companies</span><span>Login</span>
+                <div class="mock-signup">Sign Up Free</div>
+              </div>
+            </div>
+            <div class="mock-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5B4FE9" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg> AI-Powered Global Hiring Platform</div>
+            <div class="mock-headline">Connecting Global<br>Talent<br>with <em>Elite Recruiters</em></div>
+            <div class="mock-subdesc">Find your dream role or scale your team worldwide. WorkHire utilizes AI matching and real-time direct chat.</div>
+            <div class="mock-search">
+              <span class="mock-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Job title, skill, or role...</span>
+              <span class="mock-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Remote, city</span>
+              <div class="mock-search-btn">Search Jobs →</div>
+            </div>
+            <div class="mock-popular"><span class="label">Popular:</span><span>Software Developer</span><span>Project Manager</span><span>Nurse</span><span>Teacher</span></div>
+            <div class="mock-float-card" style="right:10px;top:55px">
+              <div class="mock-hiring">HIRING LIVE</div>
+              <div style="font-weight:600">Global Health Corp</div>
+              <div style="color:#999;font-size:7px">Verified Recruiter</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Seeker Dashboard -->
+        <div class="mockup-view" id="wh-dashboard">
+          <div class="mock-wh-dash">
+            <div class="mock-sidebar">
+              <div class="mock-sidebar-header"><div style="width:18px;height:18px;background:#5B4FE9;border-radius:5px;display:flex;align-items:center;justify-content:center;color:white;font-size:8px;font-weight:700">W</div> WorkHire</div>
+              <div class="mock-sidebar-sub">Job Seeker Portal</div>
+              <div class="mock-sidebar-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</div>
+              <div class="mock-sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My Profile</div>
+              <div class="mock-sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg> Applications</div>
+              <div class="mock-sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg> Messages</div>
+              <div class="mock-sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="m15 12-3 3-2-2"/></svg> AI Resume</div>
+              <div class="mock-sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Browse Jobs</div>
+            </div>
+            <div class="mock-dash-content">
+              <div class="mock-welcome">Welcome back, <span>Sayanth</span></div>
+              <div class="mock-banner">
+                <div class="mock-banner-badge">Job search helper is active</div>
+                <h4>Step up your career today!</h4>
+                <p>Upload your resume. Complete your details to get spotted by recruiters 3x faster.</p>
+              </div>
+              <div class="mock-stats-row">
+                <div class="mock-stat">
+                  <div class="mock-stat-icon" style="background:#ede9fe;color:#5B4FE9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+                  <div class="mock-stat-num">1</div><div class="mock-stat-label">Total Applied</div>
+                </div>
+                <div class="mock-stat">
+                  <div class="mock-stat-icon" style="background:#e0f2fe;color:#0ea5e9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+                  <div class="mock-stat-num">0</div><div class="mock-stat-label">Interviews</div>
+                </div>
+                <div class="mock-stat">
+                  <div class="mock-stat-icon" style="background:#dcfce7;color:#22c55e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></div>
+                  <div class="mock-stat-num">0</div><div class="mock-stat-label">Hired</div>
+                </div>
+                <div class="mock-stat">
+                  <div class="mock-stat-icon" style="background:#fef3c7;color:#f59e0b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <div class="mock-stat-num">1</div><div class="mock-stat-label">Pending</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <svg class="deco-icon" style="right:-30px;top:40%;width:36px" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      
+      <div class="overlay-badge" style="bottom:-20px;right:-10px">
+        <div class="overlay-badge-title"><div style="width:20px;height:20px;background:#5B4FE9;border-radius:5px;display:flex;align-items:center;justify-content:center;color:white;font-size:9px;font-weight:700">W</div> WorkHire</div>
+        <div class="overlay-badge-sub">AI-powered job platform</div>
+        <div class="overlay-badge-icons">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/></svg></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></span>
+        </div>
+      </div>
+    </div>
+    <div class="project-info">
+      <p class="project-category">SaaS Platform · AI Integration · Self-Initiated</p>
+      <h3 class="project-title">WorkHire — AI-Powered<br>Job Board & Career Platform</h3>
+      <p class="project-desc">Independently designed, built, and deployed a complete SaaS job board — featuring AI-driven resume tools powered by Groq, dual recruiter & candidate portals, real-time chat via Socket.io, and Razorpay subscription billing. A showcase of what I can build from scratch.</p>
+      <div>
+        <a href="https://work-hire-saas.vercel.app/" target="_blank" class="shahil-btn">
+          View Project
+          <svg class="hand-cursor" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/><path d="m15 19 3 3 5-5"/></svg>
+        </a>
+        <a href="https://github.com/sayanth29/Work-Hire-Saas" target="_blank" class="shahil-btn">
+          Github
+          <svg class="github-icon" viewBox="0 0 24 24" fill="#888"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.71c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.59.69.49C19.13 20.63 22 16.79 22 12.26 22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Horbax -->
+  <div class="project-row" id="proj3">
+    <div class="screenshot-container">
+      <div class="corner-marks"><div class="corner-mark tl"></div><div class="corner-mark tr"></div><div class="corner-mark bl"></div><div class="corner-mark br"></div></div>
+      <div class="screenshot-mockup">
+        <div class="mock-horbax">
+          <div class="mock-hb-sidebar">
+            <div class="mock-hb-logo">Horbax</div>
+            <div class="mock-hb-sub">Concierge Admin</div>
+            <div class="mock-hb-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</div>
+            <div class="mock-hb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg> New Order</div>
+            <div class="mock-hb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pending</div>
+            <div class="mock-hb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg> History</div>
+            <div class="mock-hb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Collection</div>
+            <div class="mock-hb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</div>
+          </div>
+          <div class="mock-hb-main">
+            <div class="mock-hb-header">
+              <div><div class="mock-hb-title">Dashboard</div><div class="mock-hb-desc">Welcome back! Here's what's happening today.</div></div>
+              <div class="mock-hb-create">+ Create New Order</div>
+            </div>
+            <div class="mock-hb-stats">
+              <div class="mock-hb-stat">
+                <div class="mock-hb-stat-icon" style="background:#fef3c7;color:#f59e0b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+                <div class="mock-hb-stat-label">Today's Orders</div><div class="mock-hb-stat-val">8</div>
+              </div>
+              <div class="mock-hb-stat">
+                <div class="mock-hb-stat-icon" style="background:#ede9fe;color:#8b5cf6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="mock-hb-stat-label">Pending</div><div class="mock-hb-stat-val">7</div>
+              </div>
+              <div class="mock-hb-stat">
+                <div class="mock-hb-stat-icon" style="background:#dcfce7;color:#22c55e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                <div class="mock-hb-stat-label">Collection</div><div class="mock-hb-stat-val">₹72</div>
+              </div>
+              <div class="mock-hb-stat">
+                <div class="mock-hb-stat-icon" style="background:#e0f2fe;color:#0ea5e9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <div class="mock-hb-stat-label">Customers</div><div class="mock-hb-stat-val">189</div>
+              </div>
+            </div>
+            <div class="mock-hb-table-title">Recent Orders</div>
+            <table class="mock-hb-table">
+              <thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="mock-order-id">#LP0321</td><td>SHOUKATH</td><td>3 PANT, 1 DHOTI</td><td>₹72</td><td><span class="mock-payment upi">UPI</span></td><td class="mock-status" style="color:#22c55e"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="#22c55e"/></svg> Completed</td></tr>
+                <tr><td class="mock-order-id">#LP0320</td><td>FARISA MV</td><td>2 CHURIDHAR</td><td>₹570</td><td><span class="mock-payment cash">CASH</span></td><td class="mock-status" style="color:#f59e0b"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="#f59e0b"/></svg> Pending</td></tr>
+                <tr><td class="mock-order-id">#LP0318</td><td>IBRAHEEM K</td><td>1 DHOTI, SHIRT</td><td>₹64</td><td><span class="mock-payment cash">CASH</span></td><td class="mock-status" style="color:#3b82f6"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="#3b82f6"/></svg> Ready</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <svg class="deco-icon" style="right:-28px;bottom:30%;width:32px" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 3 2V2l-3 2-3-2-3 2-3-2-3 2-3-2z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg>
+    </div>
+    <div class="project-info">
+      <p class="project-category">Client Project · Delivered & In Production</p>
+      <h3 class="project-title">Horbax — Laundry<br>Management System</h3>
+      <p class="project-desc">Built and delivered a complete business management system for a real client — handling order lifecycle, automated billing, thermal receipt printing, delivery tracking, and expense reporting. Currently live and actively used in daily operations.</p>
+      <div>
+        <a href="https://horbax-laundry-care.vercel.app/dashboard" target="_blank" class="shahil-btn">
+          View Project
+          <svg class="hand-cursor" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/><path d="m15 19 3 3 5-5"/></svg>
+        </a>
+        <a href="https://github.com/Sayanth989/Horbax-laundry-project" target="_blank" class="shahil-btn">
+          Github
+          <svg class="github-icon" viewBox="0 0 24 24" fill="#888"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.71c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.59.69.49C19.13 20.63 22 16.79 22 12.26 22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-label fade-in">Skills <svg class="squiggle-svg" viewBox="0 0 70 20"><path d="M2,10 Q18,3 35,10 Q52,17 68,10"/></svg></div>
+  <p class="section-subtitle fade-in">The tools and technologies I work with to deliver your project.</p>
+  <div class="skills-grid fade-in">
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#e8f4fd"><svg viewBox="0 0 24 24" fill="none" stroke="#61dafb" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-60 12 12)"/></svg></div><span class="skill-name">React.js</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#f0f0f0"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M12 2L2 19.5h20L12 2z"/></svg></div><span class="skill-name">Next.js</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#fef9c3"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span class="skill-name">JavaScript</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#dbeafe"><svg viewBox="0 0 24 24" fill="none" stroke="#3178c6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h3v6"/><path d="M8 15h3"/><path d="M16 9v9"/><path d="M13 9h6"/></svg></div><span class="skill-name">TypeScript</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#dcfce7"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><span class="skill-name">Node.js</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#f0f0f0"><svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><span class="skill-name">Express.js</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#e8f5e9"><svg viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10"/><path d="M22 2 13 13"/><path d="M16 2h6v6"/></svg></div><span class="skill-name">MongoDB</span></div>
+    <div class="skill-card"><div class="skill-icon-wrap" style="background:#fdf2f0"><svg viewBox="0 0 24 24" fill="none" stroke="#f05032" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div><span class="skill-name">Git / GitHub</span></div>
+    
+    <!-- Hidden Skills -->
+    <div class="skill-card hidden-skill"><div class="skill-icon-wrap" style="background:#f3e8ff"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/><circle cx="12" cy="12" r="3"/></svg></div><span class="skill-name">Socket.io</span></div>
+    <div class="skill-card hidden-skill"><div class="skill-icon-wrap" style="background:#fef3c7"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="m9 15 2-2 4 2.5 2-2.5"/></svg></div><span class="skill-name">Groq AI</span></div>
+    <div class="skill-card hidden-skill"><div class="skill-icon-wrap" style="background:#dbeafe"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div><span class="skill-name">Razorpay</span></div>
+    <div class="skill-card hidden-skill"><div class="skill-icon-wrap" style="background:#f0f0f0"><svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div><span class="skill-name">Vercel</span></div>
+    <div class="skill-card hidden-skill"><div class="skill-icon-wrap" style="background:#fce7f3"><svg viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><span class="skill-name">JWT / Auth</span></div>
+    <div class="skill-card hidden-skill"><div class="skill-icon-wrap" style="background:#e0f2fe"><svg viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></div><span class="skill-name">Tailwind CSS</span></div>
+  </div>
+  <div class="skills-btn-container fade-in">
+    <button id="toggleSkillsBtn" class="shahil-btn">See More</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-label fade-in">About Me <svg class="squiggle-svg" viewBox="0 0 70 20"><path d="M2,10 Q18,3 35,10 Q52,17 68,10"/></svg></div>
+  <div class="about-grid fade-in">
+    <p class="about-text">
+      I'm <strong>Sayanth PV</strong>, a freelance full-stack developer based in Kerala, India. I hold a Bachelor of Computer Applications degree from <strong>Bangalore North University</strong> with a specialization in Cyber Security.<br><br>
+      I help businesses and startups turn their ideas into working products. I've delivered a <strong>production business management system</strong> for Horbax that's used daily, and independently built <strong>WorkHire</strong> — a full SaaS platform with AI-powered features, real-time communication, and payment integration.<br><br>
+      Whether you need a custom web application, a SaaS product, a dashboard, or an API — I handle everything from database design to polished frontend, and I deliver on time. <strong>Let's build something great together.</strong>
+    </p>
+    <div class="about-details">
+      <div class="about-item"><span class="about-label">Location</span><span class="about-value">Kannur, Kerala</span></div>
+      <div class="about-item"><span class="about-label">Education</span><span class="about-value">BCA — Cyber Security</span></div>
+      <div class="about-item"><span class="about-label">Expertise</span><span class="about-value">MERN Stack . Next.js . AI . SaaS</span></div>
+      <div class="about-item"><span class="about-label">Email</span><span class="about-value"><a href="mailto:sayanthpv.dev@gmail.com">sayanthpv.dev@gmail.com</a></span></div>
+      <div class="about-item"><span class="about-label">Status</span><span class="about-value status-active"><span class="pulse-dot"></span> Available for Projects</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-center">
+    <svg class="footer-bucket-svg" viewBox="0 0 160 140" fill="none" width="120">
+      <ellipse cx="80" cy="40" rx="60" ry="12" stroke="#777" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M20 40 L32 120 Q80 135 128 120 L140 40" stroke="#777" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M42 36 Q80 22 118 36" stroke="#777" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="80" cy="20" r="4" stroke="#777" stroke-width="1.5"/>
+      <line x1="80" y1="16" x2="80" y2="4" stroke="#777" stroke-width="1.2" stroke-dasharray="3 2"/>
+    </svg>
+    <p class="footer-tagline">a bucket full of <span>ideas</span> waiting to spill</p>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Made with love :)</p>
+    <div class="footer-socials">
+      <a href="https://github.com/sayanth29" target="_blank" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
+      <a href="https://www.instagram.com/sayant.th" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+      <a href="mailto:sayanthpv.dev@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      <a href="https://www.linkedin.com/in/sayanth-pv" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.project-row, .fade-in').forEach(el => obs.observe(el));
+
+// Parallax cards
+document.addEventListener('mousemove', e => {
+  const mx = (e.clientX / window.innerWidth - 0.5) * 2;
+  const my = (e.clientY / window.innerHeight - 0.5) * 2;
+  document.querySelectorAll('.bucket-card').forEach((c, i) => {
+    const d = (i + 1) * 4;
+    c.style.marginLeft = (mx * d) + 'px';
+    c.style.marginTop = (my * d) + 'px';
+  });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+});
+
+// Skill tilt
+document.querySelectorAll('.skill-card').forEach(c => {
+  c.addEventListener('mousemove', e => { const r = c.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - 0.5; const y = (e.clientY - r.top) / r.height - 0.5; c.style.transform = `translateY(-5px) rotate(${x*6}deg) perspective(500px) rotateX(${-y*6}deg)`; });
+  c.addEventListener('mouseleave', () => { c.style.transform = ''; });
+});
+
+// Mobile nav toggle
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+function closeNav() { document.getElementById('navLinks').classList.remove('open'); }
+
+// Hide nav logo on scroll
+const navLogo = document.querySelector('.nav-logo');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    navLogo.classList.add('hidden');
+  } else {
+    navLogo.classList.remove('hidden');
+  }
+});
+
+// Toggle skills visibility
+document.getElementById('toggleSkillsBtn').addEventListener('click', function() {
+  const grid = document.querySelector('.skills-grid');
+  const isExpanded = grid.classList.toggle('show-all');
+  this.textContent = isExpanded ? 'See Less' : 'See More';
+});
+
+// Mockup Tab Switching Logic
+document.querySelectorAll('.mockup-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const tabsContainer = tab.closest('.mockup-tabs');
+    tabsContainer.querySelectorAll('.mockup-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    
+    const targetId = tab.getAttribute('data-target');
+    const container = tab.closest('.screenshot-container');
+    container.querySelectorAll('.mockup-view').forEach(view => {
+      if (view.id === targetId) {
+        view.classList.add('active');
+      } else {
+        view.classList.remove('active');
+      }
+    });
+  });
+});
+
+// Custom Cursor Logic
+const customCursor = document.getElementById('cursor');
+const customDot = document.getElementById('cursorDot');
+let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
+let isCursorActive = false;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  if (!isCursorActive) {
+    customCursor.style.opacity = '1';
+    customDot.style.opacity = '1';
+    isCursorActive = true;
+  }
+  customDot.style.left = mouseX + 'px';
+  customDot.style.top = mouseY + 'px';
+});
+
+document.addEventListener('mouseleave', () => {
+  customCursor.style.opacity = '0';
+  customDot.style.opacity = '0';
+  isCursorActive = false;
+});
+
+function animateCustomCursor() {
+  currentX += (mouseX - currentX) * 0.15;
+  currentY += (mouseY - currentY) * 0.15;
+  customCursor.style.left = currentX + 'px';
+  customCursor.style.top = currentY + 'px';
+  requestAnimationFrame(animateCustomCursor);
+}
+animateCustomCursor();
+
+// Cursor Hover Effects
+const interactives = 'a, button, .skill-card, .shahil-btn, .nav-toggle';
+document.querySelectorAll(interactives).forEach(el => {
+  el.addEventListener('mouseenter', () => customCursor.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => customCursor.classList.remove('hovered'));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+🟢 Beginner Level
+
+Find all prime numbers in an array.
+Input: [3, 4, 5, 10, 17] → Output: [3, 5, 17] _/
+
+Count how many prime numbers are in the array.
+Input: [2, 7, 8, 9, 11] → Output: 3_/
+
+Check if the array contains any prime number.
+Output: true / false
+
+Check if the array contains only prime numbers.
+Input: [2, 3, 5] → true_/
+
+Find the largest prime number in the array._/
+
+🟡 Intermediate Level
+
+Replace non-prime numbers with -1 in an array.
+
+Return an array of indices where prime numbers occur.
+
+Sum of all prime numbers in an array.
+
+Count primes between two given values in the array.
+
+Find the second largest prime number in the array.
