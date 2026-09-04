@@ -715,6 +715,17 @@
     .social-row a svg{ width:14px; height:14px; }
     .hero-bucket-wrap { width: 220px; }
   }
+  /* ---------- SCROLL ANIMATIONS ---------- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 </head>
 <body>
@@ -1022,6 +1033,30 @@ function toggleSkills() {
     toggleText.textContent = isOpen ? 'Hide skills' : 'Show skills';
   }
 }
+
+// Scroll Reveal Animations
+document.addEventListener('DOMContentLoaded', () => {
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('appear');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  const revealElements = document.querySelectorAll('header.hero, section, .project, .contact-box');
+  revealElements.forEach(el => {
+    el.classList.add('fade-in');
+    observer.observe(el);
+  });
+});
 </script>
 </body>
 </html>
